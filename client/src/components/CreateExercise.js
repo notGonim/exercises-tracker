@@ -20,13 +20,25 @@ export const CreateExercise = () => {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error);     
             })
     }, [])
 
 
     const submitForm = (e) => {
         e.preventDefault();
+
+        const exercise = {
+            username: username,
+            description: description,
+            duration: duration,
+            date: startDate
+          }
+      
+          axios.post('http://localhost:5000/exercises/add', exercise)
+          .then(res => console.log(res.data));
+    
+
 
     }
 
