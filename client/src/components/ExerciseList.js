@@ -28,16 +28,20 @@ export const ExerciseList = () => {
         axios.get('http://localhost:5000/exercises/')
             .then(response => {
                 setExercises(response.data)
-                console.log(exercises)
             })
             .catch((error) => {
                 console.log(error);
             })
-    })
+    }, [exercises])
 
-    const deleteExercise = () => {
+  
 
+    const deleteExercise = (id) => {
+        axios.delete('http://localhost:5000/exercises/' + id)
+            .then(response => { console.log(response.data) });
+        setExercises(exercises.filter(el => el._id !== id))
     }
+
 
     const exerciseList = () => {
         return exercises.map(currentexercise => {

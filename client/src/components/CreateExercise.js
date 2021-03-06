@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios'
+import { useHistory } from "react-router-dom";
+
 
 export const CreateExercise = () => {
+    const history = useHistory()
 
     const [username, setUsername] = useState('')
     const [description, setDescription] = useState('')
@@ -20,7 +23,7 @@ export const CreateExercise = () => {
                 }
             })
             .catch((error) => {
-                console.log(error);     
+                console.log(error);
             })
     }, [])
 
@@ -33,11 +36,12 @@ export const CreateExercise = () => {
             description: description,
             duration: duration,
             date: startDate
-          }
-      
-          axios.post('http://localhost:5000/exercises/add', exercise)
-          .then(res => console.log(res.data));
-    
+        }
+
+        axios.post('http://localhost:5000/exercises/add', exercise)
+            .then(res => console.log(res.data));
+
+        history.push('/')
 
 
     }

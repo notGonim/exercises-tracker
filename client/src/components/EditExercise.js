@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios'
 import { useParams } from 'react-router';
+import { useHistory } from "react-router-dom";
 
 
 export const EditExercise = () => {
@@ -14,16 +15,12 @@ export const EditExercise = () => {
     const [startDate, setStartDate] = useState(new Date());
     const { id } = useParams()
 
+    const history = useHistory()
+
 
     useEffect(() => {
         axios.get(`http://localhost:5000/exercises/${id}`)
             .then(response => {
-                this.setState({
-                    username: username,
-                    description: description,
-                    duration: duration,
-                    date: new Date(response.data.date)
-                })
             })
             .catch(function (error) {
                 console.log(error);
@@ -51,8 +48,10 @@ export const EditExercise = () => {
             date: startDate
         }
 
-        axios.post(`http://localhost:5000/exercises/update/${id}`,  )
+        axios.post(`http://localhost:5000/exercises/update/${id}`, exercise)
             .then(res => console.log(res.data));
+
+        history.push('/')
 
 
     }
