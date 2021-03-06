@@ -18,9 +18,15 @@ export const EditExercise = () => {
     const history = useHistory()
 
 
+
     useEffect(() => {
         axios.get(`http://localhost:5000/exercises/${id}`)
             .then(response => {
+                setUsername(response.data.username)
+                setDescription(response.data.description)
+                setDuration(response.data.duration)
+                startDate: new Date(response.data.date)
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -36,7 +42,6 @@ export const EditExercise = () => {
                 console.log(error);
             })
     }, [id])
-
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -59,55 +64,57 @@ export const EditExercise = () => {
 
     return (
         <div>
-            <h3>Edit Exercise Log</h3>
-            <form onSubmit={onSubmit}>
-                <div className="form-group">
-                    <label>Username: </label>
-                    <select ref="userInput"
-                        required
-                        className="form-control"
-                        value={username}
-                        onChange={(e) => { setUsername(e.target.value) }}>
-                        {
-                            users.map(function (user) {
-                                return <option
-                                    key={user}
-                                    value={user}>{user}
-                                </option>;
-                            })
-                        }
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label>Description: </label>
-                    <input type="text"
-                        required
-                        className="form-control"
-                        value={description}
-                        onChange={(e) => { setDescription(e.target.value) }}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Duration (in minutes): </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={duration}
-                        onChange={(e) => { setDuration(e.target.value) }}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Date: </label>
-                    <div>
-                        <DatePicker selected={startDate}
-                            onChange={date => setStartDate(date)} />
+            <div>
+                <h3>Edit Exercise Log</h3>
+                <form onSubmit={onSubmit}>
+                    <div className="form-group">
+                        <label>Username: </label>
+                        <select
+                            required
+                            className="form-control"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}>
+                            {
+                                users.map(function (user) {
+                                    return <option
+                                        key={user}
+                                        value={user}>{user}
+                                    </option>;
+                                })
+                            }
+                        </select>
                     </div>
-                </div>
+                    <div className="form-group">
+                        <label>Description: </label>
+                        <input type="text"
+                            required
+                            className="form-control"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Duration (in minutes): </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={duration}
+                            onChange={(e) => setDuration(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Date: </label>
+                        <div>
+                            <DatePicker selected={startDate}
+                                onChange={date => setStartDate(date)} />
 
-                <div className="form-group">
-                    <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
-                </div>
-            </form>
-        </div>
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+                    </div>
+                </form>
+            </div>        </div>
     )
 }
