@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import axios from 'axios'
 
 export const CreateExercise = () => {
 
@@ -10,6 +10,19 @@ export const CreateExercise = () => {
     const [duration, setDuration] = useState(0)
     const [users, setUsers] = useState([])
     const [startDate, setStartDate] = useState(new Date());
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/user/')
+            .then(response => {
+                if (response.data.length > 0) {
+                    setUsername(response.data[0].username)
+                    setUsers(response.data.map(user => user.username))
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [])
 
 
     const submitForm = (e) => {
